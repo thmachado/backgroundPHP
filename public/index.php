@@ -8,7 +8,7 @@ $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
 $dotenv->load();
 $dotenv->required(['POSTGRES_USER', 'POSTGRES_PASSWORD', 'POSTGRES_DB']);
 
-use App\Controllers\TokenController;
+use App\Controllers\{TokenController, UsersController};
 use App\Middleware\{ContentTypeMiddleware, JwtMiddleware, RateLimitMiddleware};
 use App\Router;
 use DI\ContainerBuilder;
@@ -41,6 +41,11 @@ $router->get("/health", function () {
 });
 
 $router->get("/api/token", [TokenController::class, "index"]);
+$router->get("/api/users", [UsersController::class, "index"], [$jwtMiddleware]);
+$router->post("/api/users", [UsersController::class, "store"], [$jwtMiddleware, $contentTypeMiddleware]);
+$router->get("/api/users/{id}", [UsersController::class, "show"], [$jwtMiddleware]);
+$router->put("/api/users/{id}", [UsersController::class, "update"], [$jwtMiddleware, $contentTypeMiddleware]);
+$router->delete("/api/users/{id}", [UsersController::class, "destroy"], [$jwtMiddleware]);
 
 $response = $router->dispatch($request);
 $emitter = new SapiEmitter();
