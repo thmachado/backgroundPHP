@@ -37,19 +37,7 @@ This repository contains a production-ready RESTful API built with modern PHP, f
 **Code Standards:** PSR-4, PSR-7, PSR-11, PSR-15
 
 
-
-
-
-## Deploy
-
-Para fazer o deploy desse projeto rode
-
-```bash
-  npm run deploy
-```
-
-
-## Rodando localmente
+## Running Locally
 
 Clone the project
 
@@ -57,7 +45,7 @@ Clone the project
   git clone https://github.com/thmachado/backgroundPHP.git
 ```
 
-Entre no diretório do projeto
+Enter in the project directory
 
 ```bash
   cd project
