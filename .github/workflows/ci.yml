@@ -38,6 +38,7 @@ jobs:
           echo "REDIS_HOST=redis" >> .env
           echo "REDIS_PORT=6379" >> .env
           echo "TOKEN=test_token" >> .env
+          echo "PEPPER=test_pepper" >> .env
 
       - name: Validate composer.json and composer.lock
         run: composer validate
@@ -63,6 +64,7 @@ jobs:
           REDIS_HOST: redis
           REDIS_PORT: 6379
           TOKEN: test_token
+          PEPPER: test_pepper
         run: docker compose exec server ./vendor/bin/phpunit tests
 
       - name: Stop containers
