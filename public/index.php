@@ -9,6 +9,7 @@ $dotenv->load();
 $dotenv->required(['POSTGRES_USER', 'POSTGRES_PASSWORD', 'POSTGRES_DB']);
 
 use App\Controllers\TokenController;
+use App\Middleware\{ContentTypeMiddleware, JwtMiddleware, RateLimitMiddleware};
 use App\Router;
 use DI\ContainerBuilder;
 use Laminas\Diactoros\ServerRequestFactory;
@@ -31,11 +32,16 @@ $container = $containerBuilder->build();
 
 $request = ServerRequestFactory::fromGlobals();
 $router = new Router($container);
+$router->addGlobalMiddleware($container->get(RateLimitMiddleware::class));
+$contentTypeMiddleware = $container->get(ContentTypeMiddleware::class);
+$jwtMiddleware = $container->get(JwtMiddleware::class);
 
 $router->get("/health", function () {
     return new JsonResponse(["status" => "Health check is ok!"], 200);
 });
+
 $router->get("/api/token", [TokenController::class, "index"]);
+
 $response = $router->dispatch($request);
 $emitter = new SapiEmitter();
 $emitter->emit($response);
