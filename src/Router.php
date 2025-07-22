@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App;
 
-use App\Middleware\RequestHandler;
+use App\Middleware\{MiddlewareInterface, RequestHandler};
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\{ResponseInterface, ServerRequestInterface};
@@ -16,6 +16,11 @@ class Router
         private array $routes = [],
         private array $globalMiddlewares = []
     ) {}
+
+    public function addGlobalMiddleware(MiddlewareInterface $middleware): void
+    {
+        $this->globalMiddlewares[] = $middleware;
+    }
 
     public function dispatch(ServerRequestInterface $request): ResponseInterface
     {

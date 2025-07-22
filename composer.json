@@ -15,6 +15,9 @@
         "laminas/laminas-diactoros": "^3.6",
         "laminas/laminas-httphandlerrunner": "^2.12",
         "php-di/php-di": "^7.0",
-        "firebase/php-jwt": "^6.11"
+        "firebase/php-jwt": "^6.11",
+        "predis/predis": "^3.0",
+        "respect/validation": "^2.4",
+        "guzzlehttp/guzzle": "^7.0"
     }
 }

@@ -32,6 +32,6 @@ final class PostgresTest extends TestCase
     public function testConnectionAttributes(): void
     {
         $this->assertSame(PDO::ERRMODE_EXCEPTION, $this->database->getAttribute(PDO::ATTR_ERRMODE));
-        $this->assertSame(PDO::FETCH_ASSOC, $this->database->getAttribute(PDO::ATTR_DEFAULT_FETCH_MODE));
+        $this->assertSame(PDO::FETCH_OBJ, $this->database->getAttribute(PDO::ATTR_DEFAULT_FETCH_MODE));
     }
 }
