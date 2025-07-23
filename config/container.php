@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use App\{Postgres, Redis, Token};
-use App\Middleware\{ContentTypeMiddleware, RateLimitMiddleware};
+use App\Middleware\{ContentTypeMiddleware, RateLimitMiddleware, SecurityHeadersMiddleware};
 use App\Repositories\UserRepository;
 use App\Repositories\UserRepositoryInterface;
 use App\Services\PasswordService;
@@ -20,5 +20,6 @@ return [
     Client::class => Redis::getClient(),
     RateLimitMiddleware::class => DI\create()->constructor(Redis::getClient()),
     ContentTypeMiddleware::class => DI\autowire(),
+    SecurityHeadersMiddleware::class => DI\autowire(),
     PasswordService::class => DI\create()->constructor(getenv("PEPPER"))
 ];
