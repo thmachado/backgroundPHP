@@ -13,7 +13,8 @@ class ContentTypeMiddleware implements MiddlewareInterface
     public function __construct(
         private array $types = ["application/json"],
         private array $methods = ["POST", "PUT"]
-    ) {}
+    ) {
+    }
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
@@ -21,7 +22,8 @@ class ContentTypeMiddleware implements MiddlewareInterface
             return new JsonResponse(["error" => ["code" => 400, "message" => "Method is not allowed"]], 400);
         }
 
-        $contentType = trim($request->getHeaderLine("Content-Type"));
+        $header = strtok($request->getHeaderLine("Content-Type"), ";");
+        $contentType = trim($header);
         if (empty($contentType)) {
             return new JsonResponse(["error" => ["code" => 400, "message" => "Content-Type header is required"]], 400);
         }
